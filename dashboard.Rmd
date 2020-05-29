@@ -1,0 +1,133 @@
+---
+title: "Dashboard Futuros"
+output: 
+  flexdashboard::flex_dashboard:
+    theme: bootstrap
+---
+
+```{r setup, include=FALSE}
+
+library(flexdashboard)
+library(kableExtra)
+library(plotly)
+
+knitr::opts_chunk$set(echo = TRUE)
+
+source('contratos_abertos/run-it-all.R')
+source('ajustes/ajustes-import-datas.R')
+source('ptax/ptax-import-datas.R')
+source('param_abertura/abertura-import-datas.R')
+
+```
+
+Principal {data-icon="fa-globe"}
+=====================================  
+
+Column {data-width=600}
+-------------------------------------
+    
+### RESUMO PARA O DIA
+
+**- DOLAR**
+
+___
+
+Contrato: **`r contrato.dol.cheio`**
+
+Ajustes:
+
+-- Ajuste anterior: **`r ajuste.ant.dol.cheio`**
+
+-- Ajuste do dia: **`r ajuste.atual.dol.cheio`**
+
+PTAX:
+
+-- Valor de fechamento: **`r df.ptax.dolar[2,2]`** 
+
+-- VOL da ptax: **`r df.ptax.dolar[1,2]`**
+
+Parametro de abertura:
+
+-- Valor: **`r param.abertura`** 
+
+___
+
+**- INDICE**
+
+___
+
+Contrato: **`r contrato.ind.cheio`**
+
+Ajustes:
+
+-- Ajuste anterior: **`r ajuste.ant.ind.cheio`**
+
+-- Ajuste do dia: **`r ajuste.atual.ind.cheio`**
+
+
+Column {data-width=400}
+-------------------------------------
+   
+### CONTRATOS DOLAR -- INV. ESTRANGEIRO -- **`r format(contratos.dolar[nrow(contratos.dolar),][[1]], "%d/%m/%Y")`**
+
+```{r echo=FALSE}
+
+valor.var.dolar <- format(as.numeric(contratos.dolar[nrow(contratos.dolar),][[8]]), digits=9, decimal.mark=",", big.mark=".",small.mark=".")
+valor.saldo.dolar <- format(as.numeric(contratos.dolar[nrow(contratos.dolar),][[3]]), digits=9, decimal.mark=",", big.mark=".",small.mark=".")
+
+```
+
+Saldo: **`r valor.saldo.dolar`** / 
+Variacao: **`r valor.var.dolar`**
+
+```{r echo=FALSE, fig.width=2, fig.height=2}
+
+hide_legend(ggplotly(temp.graf.dol, tooltip = "text"))
+
+```
+
+### CONTRATOS INDICE -- INV. ESTRANGEIRO -- **`r format(contratos.indice[nrow(contratos.indice),][[1]], "%d/%m/%Y")`**
+
+```{r echo=FALSE}
+
+valor.var.ind <- format(as.numeric(contratos.indice[nrow(contratos.indice),][[8]]), digits=9, decimal.mark=",", big.mark=".",small.mark=".")
+valor.saldo.ind <- format(as.numeric(contratos.indice[nrow(contratos.indice),][[3]]), digits=9, decimal.mark=",", big.mark=".",small.mark=".")
+
+```
+
+Saldo: **`r valor.saldo.ind`** / 
+Variacao: **`r valor.var.ind`**
+
+```{r echo=FALSE, fig.width=2, fig.height=2}
+
+hide_legend(ggplotly(temp.graf.ind, tooltip = "text"))
+
+```
+
+```{r echo=FALSE, fig.width=5, fig.height=5}
+
+hide_legend(ggplotly(temp.graf.ind))
+
+```
+
+Contratos em aberto {data-icon="fa-folder-open"}
+=====================================  
+ 
+### Chart 3
+    
+```{r echo=FALSE, results='asis'}
+
+tab.aux.dol <- tail(contratos.dolar,n = 10)
+tab.aux.dol$VAR = NULL
+tab.aux.dol$DATA1 = NULL
+tab.aux.dol$DATA = format(tab.aux.dol$DATA, "%d/%m/%Y")
+tab.aux.dol$TOTAL <- format(as.numeric(tab.aux.dol$TOTAL),digits=9, decimal.mark=",", big.mark=".",small.mark=".")
+tab.aux.dol$IE <- format(as.numeric(tab.aux.dol$IE),digits=9, decimal.mark=",", big.mark=".",small.mark=".")
+tab.aux.dol$II <- format(as.numeric(tab.aux.dol$II),digits=9, decimal.mark=",", big.mark=".",small.mark=".")
+tab.aux.dol$PJF <- format(as.numeric(tab.aux.dol$PJF),digits=9, decimal.mark=",", big.mark=".",small.mark=".")
+tab.aux.dol$PF <- format(as.numeric(tab.aux.dol$PF),digits=9, decimal.mark=",", big.mark=".",small.mark=".")
+tab.aux.dol$PJNF <- format(as.numeric(tab.aux.dol$PJNF),digits=9, decimal.mark=",", big.mark=".",small.mark=".")
+
+kable(tab.aux.dol, row.names = F) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+
+```
