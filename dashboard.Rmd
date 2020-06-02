@@ -44,7 +44,7 @@ PTAX:
 
 -- Valor de fechamento: **`r df.ptax.dolar[2,2]`** 
 
--- VOL da ptax: **`r df.ptax.dolar[1,2]`**
+-- Vol. da Ptax: **`r df.ptax.dolar[1,2]`**
 
 Parametro de abertura:
 
