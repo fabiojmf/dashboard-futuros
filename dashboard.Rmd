@@ -17,13 +17,14 @@ source('contratos_abertos/run-it-all.R')
 source('ajustes/ajustes-import-datas.R')
 source('ptax/ptax-import-datas.R')
 source('param_abertura/abertura-import-datas.R')
+source('media_pontos/media-import-datas.R')
 
 ```
 
 Principal {data-icon="fa-globe"}
 =====================================  
 
-Column {data-width=600}
+Column {data-width=400}
 -------------------------------------
     
 ### RESUMO PARA O DIA
@@ -50,22 +51,24 @@ Parametro de abertura:
 
 -- Valor: **`r param.abertura`** 
 
-___
-
-**- INDICE**
 
 ___
 
-Contrato: **`r contrato.ind.cheio`**
+**- VOLATILIDADE**
 
-Ajustes:
+___
 
--- Ajuste anterior: **`r ajuste.ant.ind.cheio`**
+5 dias: **`r media.cinco.dias`**
 
--- Ajuste do dia: **`r ajuste.atual.ind.cheio`**
+10 dias: **`r media.dez.dias`** 
 
+15 dias: **`r media.quinze.dias`**
 
-Column {data-width=400}
+21 dias: **`r media.vinte.dias`**
+
+30 dias: **`r media.trinta.dias`**
+
+Column {data-width=600}
 -------------------------------------
    
 ### CONTRATOS DOLAR -- INV. ESTRANGEIRO -- **`r format(contratos.dolar[nrow(contratos.dolar),][[1]], "%d/%m/%Y")`**
