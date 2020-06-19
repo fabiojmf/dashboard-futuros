@@ -24,7 +24,7 @@ source('media_pontos/media-import-datas.R')
 Principal {data-icon="fa-globe"}
 =====================================  
 
-Column {data-width=400}
+Column {data-width=500}
 -------------------------------------
     
 ### RESUMO PARA O DIA
@@ -68,7 +68,7 @@ ___
 
 30 dias: **`r media.trinta.dias`**
 
-Column {data-width=600}
+Column {data-width=500}
 -------------------------------------
    
 ### CONTRATOS DOLAR -- INV. ESTRANGEIRO -- **`r format(contratos.dolar[nrow(contratos.dolar),][[1]], "%d/%m/%Y")`**
